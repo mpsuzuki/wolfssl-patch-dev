@@ -7956,7 +7956,7 @@ int sp_addmod_ct(const sp_int* a, const sp_int* b, const sp_int* m, sp_int* r)
  * @return  MP_OKAY on success.
  */
 static void _sp_submod_ct(const sp_int* a, const sp_int* b, const sp_int* m,
-    unsigned int max, sp_int* r)
+    unsigned int mx, sp_int* r)
 {
 #ifndef SQR_MUL_ASM
     sp_int_sword w;
@@ -7977,7 +7977,7 @@ static void _sp_submod_ct(const sp_int* a, const sp_int* b, const sp_int* m,
     l = 0;
     h = 0;
 #endif
-    for (i = 0; i < max; i++) {
+    for (i = 0; i < mx; i++) {
         /* Values past 'used' are not initialized. */
         mask_a += (i == a->used);
         mask_b += (i == b->used);
