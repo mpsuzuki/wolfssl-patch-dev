@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # tls13.test
 # Copyright wolfSSL 2016-2021
