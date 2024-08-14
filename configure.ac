@@ -1594,6 +1594,7 @@ AS_IF([ test "x$ENABLED_SINGLETHREADED" = "xno" ],[
       ])
 
 AS_IF([ test "x$ENABLED_SINGLETHREADED" = "xyes" ],[ AM_CFLAGS="$AM_CFLAGS -DSINGLE_THREADED" ])
+AC_SUBST([PTHREAD_LIBS])
 
 # Enable rwlock
 AC_ARG_ENABLE([rwlock],
