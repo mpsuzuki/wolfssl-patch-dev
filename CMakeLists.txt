@@ -283,6 +283,12 @@ if(NOT WOLFSSL_SINGLE_THREADED)
         list(APPEND WOLFSSL_DEFINITIONS
             "-DHAVE_PTHREAD"
             "-D_POSIX_THREADS")
+
+        if(CMAKE_THREAD_LIBS_INIT)
+            set(PTHREAD_LIBS "-l${CMAKE_THREAD_LIBS_INIT}")
+        else()
+            set(PTHREAD_LIBS "")
+        endif()
     endif()
 else()
     list(APPEND WOLFSSL_DEFINITIONS "-DSINGLE_THREADED")
