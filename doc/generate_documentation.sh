@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # This script depends on g++, cmake, git, and make to be installed
 
 POSIXLY_CORRECT=1

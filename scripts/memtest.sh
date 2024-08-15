@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Run this script from the wolfSSL root as `./scripts/memtest.sh`.
 
