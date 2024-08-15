@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if test ! -x ./wolfcrypt/test/testwolfcrypt
 then

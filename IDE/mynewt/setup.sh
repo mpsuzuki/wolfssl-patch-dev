@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/usr/bin/env bash -e
 
 # this scrypt deploy wolfssl and wolfcrypto source code to mynewt project
 # run as bash "mynewt project root directory path"
