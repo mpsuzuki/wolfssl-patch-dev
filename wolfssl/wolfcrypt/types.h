@@ -1484,17 +1484,17 @@ typedef struct w64wrapper {
         typedef size_t        THREAD_TYPE;
         #define WOLFSSL_THREAD
     #elif defined(WOLFSSL_PTHREADS)
-        #ifndef __MACH__
-            #include <pthread.h>
-            typedef struct COND_TYPE {
-                pthread_mutex_t mutex;
-                pthread_cond_t cond;
-            } COND_TYPE;
-        #else
+        #ifdef HAVE_DISPATCH_DISPATCH_H
             #include <dispatch/dispatch.h>
             typedef struct COND_TYPE {
                 wolfSSL_Mutex mutex;
                 dispatch_semaphore_t cond;
+            } COND_TYPE;
+        #else
+            #include <pthread.h>
+            typedef struct COND_TYPE {
+                pthread_mutex_t mutex;
+                pthread_cond_t cond;
             } COND_TYPE;
         #endif
         typedef void*         THREAD_RETURN;

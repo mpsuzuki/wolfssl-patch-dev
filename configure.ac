@@ -117,6 +117,7 @@ then
 fi
 
 AC_CHECK_HEADERS([arpa/inet.h fcntl.h limits.h netdb.h netinet/in.h stddef.h time.h sys/ioctl.h sys/socket.h sys/time.h errno.h sys/un.h])
+AC_CHECK_HEADERS([dispatch/dispatch.h])
 AC_CHECK_LIB([network],[socket])
 AC_C_BIGENDIAN
 AC_C___ATOMIC
