@@ -8959,10 +8959,17 @@ then
                        && test "$ac_cv_header_Security_SecTrust_h" = "yes" \
                        && test "$ac_cv_header_Security_SecPolicy_h" = "yes")],
             [
+                orig_LDFLAGS="$LDFLAGS"
                 LDFLAGS="$LDFLAGS -framework CoreFoundation -framework Security"
-                AS_IF([test "$ac_cv_header_Security_SecTrustSettings_h" != "yes"],
-                [
-                  AM_CFLAGS="$AM_CFLAGS -DWOLFSSL_APPLE_NATIVE_CERT_VALIDATION"
+                AC_CHECK_FUNC([SecCertificateCreateWithData],[
+                    AS_IF([test "$ac_cv_header_Security_SecTrustSettings_h" != "yes"],
+                    [
+                      AM_CFLAGS="$AM_CFLAGS -DWOLFSSL_APPLE_NATIVE_CERT_VALIDATION"
+                    ])
+                ],[
+                    AC_MSG_WARN([Apple Security.framework headers are found, but some functions are missing, disable --enable-sys-ca-certs option])
+                    LDFLAGS="$orig_LDFLAGS"
+                    ENABLED_SYS_CA_CERTS="no"
                 ])
             ],
             [
