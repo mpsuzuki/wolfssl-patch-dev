@@ -14409,7 +14409,7 @@ void bench_sphincsKeySign(byte level, byte optim)
         return (double)ns / 1000000000.0;
     }
 
-#else
+#elif defined(CLOCK_REALTIME) /* clock_gettime() availability should be checked */
 
     #include <sys/time.h>
 
@@ -14428,6 +14428,22 @@ void bench_sphincsKeySign(byte level, byte optim)
     #endif
     }
 
+#else /* ancient Unix system with gettimeofday() but no clock_gettime() */
+    double current_time(int reset)
+    {
+        struct timeval tv;
+        struct timezone tz = {0, 0};
+
+        (void)reset;
+
+        LIBCALL_CHECK_RET(gettimeofday(&tv, &tz));
+
+    #ifdef BENCH_MICROSECOND
+        return (double)tv.tv_sec * 1000000 + (double)tv.tv_usec;
+    #else
+        return (double)tv.tv_sec + (double)tv.tv_usec / 1000000;
+    #endif
+    }
 #endif /* _WIN32 */
 
 #if defined(HAVE_GET_CYCLES)
