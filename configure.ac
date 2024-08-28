@@ -73,6 +73,23 @@ WOLFSSL_BUILD_DATE=$(LC_TIME=C date +"%a, %d %b %Y %T %z")
 AC_SUBST([WOLFSSL_BUILD_DATE])
 
 
+# Resume test (scripts/resume.test) want to have a command
+# which can sleep shorter than 1 sec.  POSIX does not guarantee
+# "sleep" command to support floating argument. If not supported,
+# test/xsleep would be built. 
+AC_MSG_CHECKING([whether "sleep" command supports a floating number argument])
+ac_sleep_support_float=`sleep 0.01 2> /dev/null && echo yes || echo no`
+if test ${ac_sleep_support_float} = "yes"
+then
+    AC_MSG_RESULT([yes])
+    BUILD_XSLEEP=
+else
+    AC_MSG_RESULT([no])
+    BUILD_XSLEEP=yes
+fi
+
+
+
 # Moved these size of and type checks before the library checks.
 # The library checks add the library to subsequent test compiles
 # and in some rare cases, the networking check causes these sizeof
@@ -9879,6 +9896,8 @@ AM_CONDITIONAL([BUILD_MAXQ10XX],[test "x$ENABLED_MAXQ10XX" = "xyes"])
 AM_CONDITIONAL([BUILD_ARIA],[test "x$ENABLED_ARIA" = "xyes"])
 AM_CONDITIONAL([BUILD_XILINX],[test "x$ENABLED_XILINX" = "xyes"])
 AM_CONDITIONAL([BUILD_AUTOSAR],[test "x$ENABLED_AUTOSAR" = "xyes"])
+
+AM_CONDITIONAL([BUILD_XSLEEP],[test "x$BUILD_XSLEEP" = "xyes"])
 
 if test "$ENABLED_REPRODUCIBLE_BUILD" != "yes" &&
    (test "$ax_enable_debug" = "yes" ||

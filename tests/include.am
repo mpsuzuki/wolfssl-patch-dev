@@ -18,6 +18,11 @@ tests_unit_test_SOURCES = \
 tests_unit_test_CFLAGS       = -DNO_MAIN_DRIVER $(AM_CFLAGS) $(WOLFSENTRY_INCLUDE)
 tests_unit_test_LDADD        = src/libwolfssl@LIBSUFFIX@.la $(LIB_STATIC_ADD) $(WOLFSENTRY_LIB)
 tests_unit_test_DEPENDENCIES = src/libwolfssl@LIBSUFFIX@.la
+if BUILD_XSLEEP
+noinst_PROGRAMS += tests/xsleep
+tests_xsleep_SOURCES = tests/xsleep.c
+tests_xsleep_LDADD = -lm
+endif
 endif
 EXTRA_DIST += tests/unit.h \
               tests/test.conf \
