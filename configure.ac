@@ -30,6 +30,13 @@ m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
 AC_ARG_PROGRAM
 
+if test "$am_cv_sleep_fractional_seconds" = "yes"
+then
+  BUILD_XSLEEP=
+else
+  BUILD_XSLEEP=yes
+fi
+
 AC_CONFIG_HEADERS([config.h:config.in])
 
 LT_PREREQ([2.4.2])
@@ -71,23 +78,6 @@ AS_IF([ test -n "$CFLAG_VISIBILITY" ], [
 
 WOLFSSL_BUILD_DATE=$(LC_TIME=C date +"%a, %d %b %Y %T %z")
 AC_SUBST([WOLFSSL_BUILD_DATE])
-
-
-# Resume test (scripts/resume.test) want to have a command
-# which can sleep shorter than 1 sec.  POSIX does not guarantee
-# "sleep" command to support floating argument. If not supported,
-# test/xsleep would be built. 
-AC_MSG_CHECKING([whether "sleep" command supports a floating number argument])
-ac_sleep_support_float=`sleep 0.01 2> /dev/null && echo yes || echo no`
-if test ${ac_sleep_support_float} = "yes"
-then
-    AC_MSG_RESULT([yes])
-    BUILD_XSLEEP=
-else
-    AC_MSG_RESULT([no])
-    BUILD_XSLEEP=yes
-fi
-
 
 
 # Moved these size of and type checks before the library checks.
