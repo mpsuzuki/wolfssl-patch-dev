@@ -1266,7 +1266,7 @@ WOLFSSL_ABI WOLFSSL_API int wolfCrypt_Cleanup(void);
 #ifndef WOLFSSL_NO_FENCE
     #ifdef XFENCE
         /* use user-supplied XFENCE definition. */
-    #elif defined(__GNUC__) && (__GNUC__ >= 4)
+    #elif defined(__GNUC__) && (__GNUC__ >= 4) && (__GNUC_MINOR__ > 0)
         #define XFENCE() __sync_synchronize()
     #elif defined (__i386__) || defined(__x86_64__)
         #define XFENCE() XASM_VOLATILE("lfence")
