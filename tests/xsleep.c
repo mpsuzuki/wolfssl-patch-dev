@@ -10,10 +10,10 @@
 
 int main(int argc, char** argv)
 {
-  double      dsec = 0;
-  unsigned    isec = 0;
-  useconds_t  usec = 0;
-  char*       endp = NULL;
+  double        dsec = 0;
+  long int      lsec = 0;
+  useconds_t    usec = 0;
+  char*         endp = NULL;
 
   if (argc < 2) {
     fprintf(stderr, "%s requires one argument\n", argv[0]);
@@ -36,10 +36,10 @@ int main(int argc, char** argv)
     exit(-4);
   }
 
-  isec = (unsigned int)floor(dsec);
-  usec = (useconds_t)(int)((dsec - isec) * 1000000);
+  lsec = lrint(floor(dsec));
+  usec = (useconds_t)(int)((dsec - lsec) * 1000000);
 
-  sleep(isec);
+  sleep((unsigned int)lsec);
   usleep(usec);
 
   exit(0);
